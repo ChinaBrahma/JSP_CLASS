@@ -267,5 +267,127 @@ application
 ```
 Rules to use implicit objects
 
+# 11-April-2025
+![JSP TAGS](jsp_tags.svg)
 
+```jsp
+<%@ page contentType="text/html" pageEncoding="UTF-8" import="java.util.Random" %>
+
+<html>
+<head>
+    <title>Random Number Generator</title>
+</head>
+<body>
+    Random Number: 
+    <%
+        Random r = new Random();
+        int num = r.nextInt(100); // Generates a number between 0 and 99
+        out.print(num);
+    %>
+</body>
+</html>
+
+```
+
+header.jsp
+```jsp
+<h1 style="
+    background-color: blue;
+    color: white;
+    padding: 5px;
+">
+    Random Number
+</h1>
+
+```
+If we want to add header from header.jsp file we do the following:
+
+```jsp
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="java.util.Random" %>
+
+<html>
+<head>
+    <title>Random Number Generator</title>
+</head>
+<body>
+
+    <%@ include file="header.jsp" %>
+
+    <%
+        Random r = new Random();
+        int num = r.nextInt(100); // Generates number between 0 and 99
+        out.print("Random Number: " + num);
+    %>
+
+</body>
+</html>
+```
+Taglib Usecase:
+```jsp
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Using JSTL</title>
+</head>
+<body>
+
+    <c:set var="name" value="Ravi" />
+    <p>Hello, <c:out value="${name}" /></p>
+
+</body>
+</html>
+
+```
+
+JSTL uses
+```jsp
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSTL Examples</title>
+</head>
+<body>
+
+    <!-- 1. Setting and Outputting a Variable -->
+    <c:set var="name" value="Alice" />
+    <p>Hello, <c:out value="${name}" /></p>
+
+    <!-- 2. Conditional Rendering -->
+    <c:set var="age" value="20" />
+    <c:if test="${age >= 18}">
+        <p>You are eligible to vote.</p>
+    </c:if>
+
+    <!-- 3. Looping from 1 to 5 -->
+    <p>Numbers from 1 to 5:</p>
+    <c:forEach var="i" begin="1" end="5">
+        ${i} 
+    </c:forEach>
+
+    <!-- 4. Choose/When/Otherwise -->
+    <c:set var="score" value="85" />
+    <p>
+        <c:choose>
+            <c:when test="${score >= 90}">Grade: A</c:when>
+            <c:when test="${score >= 80}">Grade: B</c:when>
+            <c:otherwise>Grade: C or below</c:otherwise>
+        </c:choose>
+    </p>
+
+    <!-- 5. Formatting Date -->
+    <jsp:useBean id="now" class="java.util.Date" />
+    <p>Today's Date: <fmt:formatDate value="${now}" pattern="dd-MM-yyyy" /></p>
+
+</body>
+</html>
+
+```
 
